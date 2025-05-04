@@ -4,6 +4,10 @@ import uvicorn
 
 app = FastAPI()
 
+@app.get("/")
+def root():
+    return {"message": "Welcome to the root route!"}
+
 def is_real_or_fake(file_name: str) -> str:
     # Extract the last number in the filename (before extension)
     name = file_name.rsplit('.', 1)[0]
