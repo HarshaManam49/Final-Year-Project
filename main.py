@@ -19,6 +19,8 @@
 
 from fastapi import FastAPI, File, UploadFile
 from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
+
 import random
 
 app = FastAPI()
