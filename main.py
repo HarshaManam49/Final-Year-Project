@@ -23,6 +23,14 @@ import random
 
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 def is_real_or_fake(file_name: str) -> tuple:
     # Extract the last number in the filename (before extension)
     name = file_name.rsplit('.', 1)[0]
