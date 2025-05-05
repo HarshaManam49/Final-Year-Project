@@ -1,22 +1,3 @@
-# from fastapi import FastAPI, File, UploadFile
-# from fastapi.responses import JSONResponse
-# from fastapi.middleware.cors import CORSMiddleware
-
-# app = FastAPI()
-
-# app.add_middleware(
-#     CORSMiddleware,
-#     allow_origins=["*"],
-#     allow_credentials=True,
-#     allow_methods=["*"],
-#     allow_headers=["*"],
-# )
-
-# @app.get("/")
-# def root():
-#     return {"message": "Welc
-# # Run this using: uvicorn filename:app --reload
-
 from fastapi import FastAPI, File, UploadFile
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
@@ -25,6 +6,7 @@ import random
 
 app = FastAPI()
 
+# Enable CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -39,7 +21,10 @@ def is_real_or_fake(file_name: str) -> tuple:
     numbers = ''.join(filter(str.isdigit, name))
     
     if numbers == '':
-        return "0", 0.0  # No digit found
+        # No digit found — assume "real" with random confidence
+        prediction = "real"
+        confidence = round(random.uniform(0.65, 0.9), 2)
+        return prediction, confidence
 
     last_digit = int(numbers[-1])
     prediction = "real" if last_digit % 2 == 0 else "fake"
@@ -71,4 +56,3 @@ async def predict_video(file: UploadFile = File(...)):
         "prediction": prediction,
         "confidence": confidence
     })
-
